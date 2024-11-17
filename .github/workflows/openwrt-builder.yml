@@ -25,10 +25,10 @@ env:
   REPO_URL: https://github.com/coolsnowwolf/lede
   REPO_BRANCH: master
   FEEDS_CONF: feeds.conf.default
-  CONFIG_FILE: taiyi.config
+  CONFIG_FILE: .config
   DIY_P1_SH: diy-part1.sh
   DIY_P2_SH: diy-part2.sh
-  UPLOAD_BIN_DIR: true
+  UPLOAD_BIN_DIR: false
   UPLOAD_FIRMWARE: true
   UPLOAD_RELEASE: true
   TZ: Asia/Shanghai
@@ -80,11 +80,6 @@ jobs:
 
     - name: Install feeds
       run: cd openwrt && ./scripts/feeds install -a
-      
-    - name: Output taiyi.config file content
-      run: |
-        cat $CONFIG_FILE
-
         
     - name: Load custom configuration
       run: |
@@ -93,10 +88,6 @@ jobs:
         chmod +x $DIY_P2_SH
         cd openwrt
         $GITHUB_WORKSPACE/$DIY_P2_SH
-
-    - name: Output .config content
-      run: |
-        cat openwrt/.config
         
     - name: Download package
       id: package
@@ -105,10 +96,6 @@ jobs:
         make download -j8
         find dl -size -1024c -exec ls -l {} \;
         find dl -size -1024c -exec rm -f {} \;
-
-    - name: Output .config content
-      run: |
-        cat openwrt/.config
         
     - name: Compile the firmware
       id: compile
@@ -120,22 +107,6 @@ jobs:
         grep '^CONFIG_TARGET.*DEVICE.*=y' .config | sed -r 's/.*DEVICE_(.*)=y/\1/' > DEVICE_NAME
         [ -s DEVICE_NAME ] && echo "DEVICE_NAME=_$(cat DEVICE_NAME)" >> $GITHUB_ENV
         echo "FILE_DATE=_$(date +"%Y%m%d%H%M")" >> $GITHUB_ENV
-
-    - name: Output .config content
-      run: |
-        cat openwrt/.config
-
-    - name: Output DEVICE_NAME file content
-      run: |
-        cat openwrt/DEVICE_NAME
-
-    - name: Output DEVICE_NAME environment variable
-      run: |
-        echo "DEVICE_NAME=${{ env.DEVICE_NAME }}"
-        
-    - name: Output all environment variables
-      run: |
-        printenv
 
     - name: Check space usage
       if: (!cancelled())
