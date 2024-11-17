@@ -54,11 +54,6 @@ jobs:
         sudo timedatectl set-timezone "$TZ"
         sudo mkdir -p /workdir
         sudo chown $USER:$GROUPS /workdir
-
-    - name: Clear GitHub Actions cache
-      run: |
-        sudo rm -rf /workdir/openwrt
-        sudo rm -rf $GITHUB_WORKSPACE/openwrt
         
     - name: Clone source code
       working-directory: /workdir
@@ -66,6 +61,7 @@ jobs:
         df -hT $PWD
         git clone $REPO_URL -b $REPO_BRANCH openwrt
         ln -sf /workdir/openwrt $GITHUB_WORKSPACE/openwrt
+        
     - name: Cache
       uses: klever1988/cachewrtbuild@main
       with:
@@ -98,6 +94,10 @@ jobs:
         cd openwrt
         $GITHUB_WORKSPACE/$DIY_P2_SH
 
+    - name: Output .config content
+      run: |
+        cat openwrt/.config
+        
     - name: Download package
       id: package
       run: |
