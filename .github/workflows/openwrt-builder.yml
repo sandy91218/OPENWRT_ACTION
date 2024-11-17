@@ -55,6 +55,11 @@ jobs:
         sudo mkdir -p /workdir
         sudo chown $USER:$GROUPS /workdir
 
+    - name: Clear GitHub Actions cache
+      run: |
+        sudo rm -rf /workdir/openwrt
+        sudo rm -rf $GITHUB_WORKSPACE/openwrt
+        
     - name: Clone source code
       working-directory: /workdir
       run: |
