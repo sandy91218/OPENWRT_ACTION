@@ -80,9 +80,10 @@ jobs:
     - name: Install feeds
       run: cd openwrt && ./scripts/feeds install -a
       
-    - name: Output .config content
+    - name: Output CONFIG_FILE environment variable
       run: |
-        cat openwrt/.config
+        echo "CONFIG_FILE=${{ env.CONFIG_FILE }}"
+
         
     - name: Load custom configuration
       run: |
