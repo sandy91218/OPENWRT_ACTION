@@ -18,8 +18,8 @@ env:
 
 on:
   workflow_dispatch:
-#  schedule:
-#    - cron: 0 */18 * * *
+  schedule:
+    - cron: "0 4 * * *" # 每天凌晨 4 点运行一次
 
 jobs:
   check:
