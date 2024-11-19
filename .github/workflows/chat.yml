@@ -13,9 +13,9 @@
 name: OpenWrt chat
 
 on:
-  schedule:
-    - cron: "0 3 */6 * *"
-  repository_dispatch:
+#  schedule:
+#    - cron: "0 3 */6 * *"
+#  repository_dispatch:
   workflow_dispatch:
 #  push:
 #   branches: 
