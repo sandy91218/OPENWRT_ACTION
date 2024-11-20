@@ -67,7 +67,7 @@ jobs:
       with:
         ccache: 'true'
         prefix: ${{ github.workspace }}/openwrt
-        mixkey: CS07
+        mixkey: ARMV8
         
     - name: Load custom feeds
       run: |
