@@ -14,7 +14,7 @@ name: OpenWrt CS07 Builder
 
 on:
   schedule:
-    - cron: "0 6 */6 * *"
+    - cron: "0 14 */6 * *"
   repository_dispatch:
   workflow_dispatch:
 #  push:
