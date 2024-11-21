@@ -19,7 +19,7 @@ env:
 on:
   workflow_dispatch:
   schedule:
-    - cron: "0 4 * * *" # 每天凌晨 4 点运行一次
+    - cron: "0 4 */3 * *" # 每3天凌晨 4 点运行一次
 
 jobs:
   check:
